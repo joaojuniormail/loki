@@ -1,0 +1,4 @@
+# helm upgrade --install grafana stable/grafana --version 5.0.26 -f ./values-grafana.yaml
+# helm delete grafana --purge
+persistence:
+    enabled: true

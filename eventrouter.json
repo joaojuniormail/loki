@@ -1,0 +1,32 @@
+    {
+        "metadata": {
+            "name": "botprojudi-tjba-75dc57c7bb-8hj9h.161f784d197432b9",
+            "namespace": "dev",
+            "selfLink": "/api/v1/namespaces/dev/events/botprojudi-tjba-75dc57c7bb-8hj9h.161f784d197432b9",
+            "uid": "ba2917c8-c04d-11ea-a5ed-0800270834cf",
+            "resourceVersion": "254827",
+            "creationTimestamp": "2020-07-07T12:31:05Z"
+        },
+        "involvedObject": {
+            "kind": "Pod",
+            "namespace": "dev",
+            "name": "botprojudi-tjba-75dc57c7bb-8hj9h",
+            "uid": "b7919107-c04d-11ea-a5ed-0800270834cf",
+            "apiVersion": "v1",
+            "resourceVersion": "117006",
+            "fieldPath": "spec.containers{botprojudi-tjba-rasa}"
+        },
+        "reason": "Failed",
+        "message": "Error: ImagePullBackOff",
+        "source": {
+            "component": "kubelet",
+            "host": "minikube"
+        },
+        "firstTimestamp": "2020-07-07T12:31:05Z",
+        "lastTimestamp": "2020-07-08T16:26:12Z",
+        "count": 7358,
+        "type": "Warning",
+        "eventTime": null,
+        "reportingComponent": "",
+        "reportingInstance": ""
+    }

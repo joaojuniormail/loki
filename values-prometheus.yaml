@@ -1,0 +1,2 @@
+# helm upgrade --install prometheus stable/prometheus -f ./values-prometheus.yaml
+# helm delete prometheus --purge

@@ -1,0 +1,37 @@
+# helm upgrade --install loki loki/loki-stack -f ./values-loki.yaml
+# helm delete loki --purge
+
+promtail:
+    pipelineStages:
+    - docker: {}
+    - match:
+        selector: '{app="eventrouter"}'
+        stages:
+        - json:
+            expressions:
+                label_namespace: event.metadata.namespace
+                label_pod: event.involvedObject.name
+                label_message: event.message
+                label_element_involved: event.involvedObject.fieldPath
+                label_reason: event.reason
+        - regex:
+            expression: '^(spec\.containers\{)(?P<label_container>\S+?)(\})$'
+            source: label_element_involved
+        - labels:
+            namespace: label_namespace
+            pod: label_pod
+            element: label_element_involved
+            reason: label_reason
+            container: label_container
+        - output:
+            source: label_message
+    - match:
+        selector: '{app=~".*"}'
+        stages:
+        - regex:
+            expression: "(?i)(.*)(?P<label_level>alert|critical|crit|dbug|debug|emerg|eror|error|err|failed|fatal|information|info|notice|trace|unknown|warning|warn)([^\\w].*)"
+        - template:
+            template: '{{ if .label_level }}{{ if or (eq ( ToLower .label_level ) "error") (or (eq ( ToLower .label_level ) "failed") (or (eq ( ToLower .label_level ) "eror") (eq ( ToLower .label_level ) "err") ) ) }}error{{ else if or (eq ( ToLower .label_level ) "info") (or (eq ( ToLower .label_level ) "information") (eq ( ToLower .label_level ) "notice") ) }}info{{ else if or (eq ( ToLower .label_level ) "warn") (eq ( ToLower .label_level ) "warning") }}warning{{ else if or (eq ( ToLower .label_level ) "alert") (or (or (eq ( ToLower .label_level ) "crit") (eq ( ToLower .label_level ) "critical") ) (or (eq ( ToLower .label_level ) "emerg") (eq ( ToLower .label_level ) "fatal") ) ) }}critical{{ else if or (eq ( ToLower .label_level ) "dbug") (eq ( ToLower .label_level ) "debug") }}debug{{ else if (eq ( ToLower .label_level ) "trace") }}trace{{ else }}unknown{{ end }}{{ else }}unknown{{ end }}'
+            source: label_level
+        - labels:
+            level: label_level
