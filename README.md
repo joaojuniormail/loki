@@ -10,7 +10,7 @@ Caso você já possua o prometheus e grafana instalado, pule para o passo de con
 
 ## Passo 1: Instalação do grafana
 
-Execute o comando: `helm upgrade --install grafana stable/grafana --version 4.4.1 -f ./values-grafana.yaml`
+Execute o comando: `helm upgrade --install grafana grafana/grafana -f ./values-grafana.yaml`
 
 ## Passo 2: Instalação do prometheus
 

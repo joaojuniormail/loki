@@ -1,4 +1,43 @@
-# helm upgrade --install grafana stable/grafana --version 5.0.26 -f ./values-grafana.yaml
+# helm upgrade --install grafana grafana/grafana -f ./values-grafana.yaml
 # helm delete grafana --purge
 persistence:
-    enabled: true
+  enabled: true
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.allow-http: "false"
+    cert-manager.io/issuer: "letsencrypt-prod"
+  hosts:
+    - grafana.sistemas.e-laudos.com
+  tls:
+    - secretName: "grafana-tls"
+      hosts:
+      - grafana.sistemas.e-laudos.com
+
+adminUser: admin
+adminPassword: "admin"
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      url: http://prometheus-server
+      access: proxy
+      isDefault: true
+    - name: Loki
+      type: loki
+      url: http://loki:3100
+      access: proxy
+      jsonData:
+        maxLines: 1000
+    - name: Loki-Prometheus
+      type: prometheus
+      url: http://loki:3100/loki
+      access: proxy
+      jsonData:
+        maxLines: 1000
