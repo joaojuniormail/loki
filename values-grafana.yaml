@@ -13,12 +13,12 @@ ingress:
   hosts:
     - grafana.sistemas.e-laudos.com
   tls:
-    - secretName: "grafana-tls"
+    - secretName: "tls-grafana"
       hosts:
       - grafana.sistemas.e-laudos.com
 
 adminUser: admin
-adminPassword: "admin"
+adminPassword: "#serv1ce#"
 
 datasources:
   datasources.yaml:
