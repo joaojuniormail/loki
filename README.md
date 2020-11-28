@@ -10,19 +10,19 @@ Caso você já possua o prometheus e grafana instalado, pule para o passo de con
 
 ## Passo 1: Instalação do grafana
 
-Execute o comando: `helm upgrade --install grafana grafana/grafana -f ./values-grafana.yaml`
+Execute o comando: `helm upgrade --install -n metrics grafana grafana/grafana -f ./values-grafana.yaml`
 
 ## Passo 2: Instalação do prometheus
 
-Execute o comando: `helm upgrade --install prometheus stable/prometheus -f ./values-prometheus.yaml`
+Execute o comando: `helm upgrade --install -n metrics prometheus prometheus-community/prometheus -f ./values-prometheus.yaml`
 
 ## Passo 3: Instalação do eventrouter
 
-Execute o comando: `helm upgrade --install eventrouter stable/eventrouter -f ./values-eventrouter.yaml`
+Execute o comando: `helm upgrade --install -n metrics eventrouter stable/eventrouter -f ./values-eventrouter.yaml`
 
 ## Passo 4: Instalação do loki
 
-Execute o comando: `helm upgrade --install loki loki/loki-stack -f ./values-loki.yaml`
+Execute o comando: `helm upgrade --install -n metrics loki loki/loki-stack -f ./values-loki.yaml`
 
 ## Passo 5: Adicionando datasources
 

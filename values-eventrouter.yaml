@@ -1,3 +1,3 @@
-# helm upgrade --install eventrouter stable/eventrouter -f ./values-eventrouter.yaml
+# helm upgrade --install -n metrics eventrouter stable/eventrouter -f ./values-eventrouter.yaml
 # helm delete eventrouter --purge
 sink: stdout

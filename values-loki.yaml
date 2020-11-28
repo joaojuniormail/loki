@@ -1,4 +1,4 @@
-# helm upgrade --install loki loki/loki-stack -f ./values-loki.yaml
+# helm upgrade --install -n metrics loki loki/loki-stack -f ./values-loki.yaml
 # helm delete loki --purge
 
 promtail:
